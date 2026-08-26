@@ -372,6 +372,7 @@
       transition:all .3s; background:transparent; font-family:var(--fb); font-weight:500; text-decoration:none; }
     .social-btn:hover { border-color:var(--gold); color:var(--gold); }
     .social-btn.wa:hover { border-color:#25d366; color:#25d366; }
+    .social-btn.ig:hover { border-color:#e1306c; color:#e1306c; }
     .sfooter-htitle { font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold);
       margin-bottom:1rem; font-weight:600; }
     .sfooter-hrow { font-size:.87rem; color:var(--muted); padding:.35rem 0; font-weight:300; }
@@ -438,26 +439,26 @@
         <div class="pkg-name">Paquete Básico</div>
         <div class="pkg-classes">4 <small>clases/mes</small></div>
         <div class="pkg-price">$1,800</div>
-        <div class="pkg-valid">$450 por clase · 30 días de vigencia</div>
+        <div class="pkg-valid">30 días de vigencia</div>
       </div>
       <div class="pkg-card featured">
         <div class="pkg-badge">Más popular</div>
         <div class="pkg-name">Paquete Regular</div>
         <div class="pkg-classes">8 <small>clases/mes</small></div>
         <div class="pkg-price">$3,200</div>
-        <div class="pkg-valid">$400 por clase · 30 días de vigencia</div>
+        <div class="pkg-valid">30 días de vigencia</div>
       </div>
       <div class="pkg-card">
         <div class="pkg-name">Paquete Intensivo</div>
         <div class="pkg-classes">12 <small>clases/mes</small></div>
         <div class="pkg-price">$4,800</div>
-        <div class="pkg-valid">$400 por clase · 30 días de vigencia</div>
+        <div class="pkg-valid">30 días de vigencia</div>
       </div>
       <div class="pkg-card">
         <div class="pkg-name">Paquete Pro</div>
         <div class="pkg-classes">16 <small>clases/mes</small></div>
         <div class="pkg-price">$6,300</div>
-        <div class="pkg-valid">≈ $394 por clase · 30 días de vigencia</div>
+        <div class="pkg-valid">30 días de vigencia</div>
       </div>
     </div>
     <p class="pkg-note">💡 Compra tu paquete directamente en el club o pide información por WhatsApp.
@@ -526,6 +527,7 @@
         <div class="sfooter-htitle">Contacto</div>
         <div class="sfooter-hrow" id="fAddr">México</div>
         <div style="margin-top:.8rem" id="fWaWrap"></div>
+        <div style="margin-top:.6rem" id="fMapsWrap"></div>
         <button class="btn-outline" style="margin-top:1rem;padding:.6rem 1.4rem;font-size:.82rem" onclick="goTo('agendar')">Reservar Ahora</button>
       </div>
     </div>
@@ -673,7 +675,8 @@ const load=k=>{try{return JSON.parse(localStorage.getItem(k))||null}catch{return
 const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 const getSocial=()=>load(K)||{
   brand:'Club Hípico Valle Real', tag:'Equitación · Tradición y Pasión',
-  wa:'', ig:'', fb:'', addr:'México',
+  wa:'', ig:'https://www.instagram.com/clubhipico_san.andres/', fb:'',
+  maps:'https://maps.app.goo.gl/Dt9sSD4vFsHGqd1D9', addr:'Club Hípico San Andrés',
   h1:'Martes – Viernes: 8:00 AM – 5:00 PM', h2:'Sábado: 8:00 AM – 3:00 PM'
 };
 
@@ -886,10 +889,12 @@ function renderFooter(){
   $('fCopy').textContent=s.brand;
   const btns=[];
   if(s.wa) btns.push(`<a class="social-btn wa" href="https://wa.me/52${s.wa}" target="_blank">📱 WhatsApp</a>`);
-  if(s.ig) btns.push(`<a class="social-btn" href="${s.ig}" target="_blank">📸 Instagram</a>`);
+  if(s.ig) btns.push(`<a class="social-btn ig" href="${s.ig}" target="_blank">📸 Instagram</a>`);
   if(s.fb) btns.push(`<a class="social-btn" href="${s.fb}" target="_blank">📘 Facebook</a>`);
+  if(s.maps) btns.push(`<a class="social-btn" href="${s.maps}" target="_blank">📍 Ubicación</a>`);
   $('socialRow').innerHTML=btns.join('')||'<span style="color:var(--muted);font-size:.82rem">Configura tus redes en el panel Admin → Configuración.</span>';
   $('fWaWrap').innerHTML=s.wa?`<a class="social-btn wa" href="https://wa.me/52${s.wa}" target="_blank">💬 +52 ${s.wa}</a>`:'';
+  $('fMapsWrap').innerHTML=s.maps?`<a class="social-btn" href="${s.maps}" target="_blank">📍 Ver ubicación en Google Maps</a>`:'';
 }
 
 // ══════════════════════════════════════════════════════
@@ -1386,6 +1391,7 @@ async function rCfg(c){
       <div class="fg"><label>Frase / eslogan</label><input type="text" id="cfgTag" value="${s.tag}"/></div>
       <div class="fg"><label>WhatsApp (10 dígitos)</label><input type="tel" id="cfgWa" value="${s.wa}" maxlength="10"/></div>
       <div class="fg"><label>Dirección</label><input type="text" id="cfgAddr" value="${s.addr}"/></div>
+      <div class="fg"><label>Google Maps URL</label><input type="text" id="cfgMaps" value="${s.maps||''}"/></div>
       <div class="fg"><label>Instagram URL</label><input type="text" id="cfgIg" value="${s.ig}"/></div>
       <div class="fg"><label>Facebook URL</label><input type="text" id="cfgFb" value="${s.fb}"/></div>
       <div class="fg"><label>Horario 1 (texto libre)</label><input type="text" id="cfgH1" value="${s.h1}"/></div>
@@ -1410,6 +1416,7 @@ function saveSocial(){
     ig:$('cfgIg').value.trim(),
     fb:$('cfgFb').value.trim(),
     addr:$('cfgAddr').value.trim(),
+    maps:$('cfgMaps')?.value.trim()||'',
     h1:$('cfgH1').value.trim(),
     h2:$('cfgH2').value.trim(),
   });
