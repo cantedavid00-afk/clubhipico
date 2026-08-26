@@ -57,7 +57,7 @@ BEGIN
         CASE WHEN RANDOM() > 0.3 THEN emails[idx] ELSE '' END,
         CASE WHEN RANDOM() > 0.7 THEN 1 ELSE 2 END,
         d,
-        horas[1 + FLOOR(RANDOM()*array_length(horas,1))::int],
+        horas[1 + FLOOR(RANDOM()*array_length(horas,1))::int]::time,
         notas[1 + FLOOR(RANDOM()*array_length(notas,1))::int],
         CASE WHEN d < CURRENT_DATE THEN 'completada'
              WHEN d = CURRENT_DATE THEN CASE WHEN RANDOM() > 0.5 THEN 'confirmada' ELSE 'pendiente' END
@@ -89,6 +89,6 @@ INSERT INTO citas (nombre, telefono, email, servicio_id, fecha, hora,
 SELECT 'Carlos Mendoza', '5510000001', 'carlos@mail.com', 2,
        d, h, 'Clase incluida en paquete (DEMO)', 'confirmada', 'paquete', 0
 FROM unnest(ARRAY[(CURRENT_DATE + 2)::date, (CURRENT_DATE + 5)::date]) AS d
-CROSS JOIN LATERAL (SELECT (ARRAY['10:00','16:00'])[1 + FLOOR(RANDOM()*2)]::text AS h) t;
+CROSS JOIN LATERAL (SELECT (ARRAY['10:00','16:00'])[1 + FLOOR(RANDOM()*2)]::time AS h) t;
 
 -- Listo: abre el panel Admin y revisa las secciones con los datos DEMO.
