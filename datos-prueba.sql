@@ -91,4 +91,4 @@ SELECT 'Carlos Mendoza', '5510000001', 'carlos@mail.com', 2,
 FROM unnest(ARRAY[(CURRENT_DATE + 2)::date, (CURRENT_DATE + 5)::date]) AS d
 CROSS JOIN LATERAL (SELECT (ARRAY['10:00','16:00'])[1 + FLOOR(RANDOM()*2)]::text AS h) t;
 
-RAISE NOTICE 'Paquetes DEMO creados. Listo para probar el panel.';
+-- Listo: abre el panel Admin y revisa las secciones con los datos DEMO.
