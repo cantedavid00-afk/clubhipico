@@ -1,7 +1,7 @@
 {
-  "name": "barberelite-backend",
-  "version": "1.0.0",
-  "description": "API backend para BarberElite - Sistema de citas y notificaciones",
+  "name": "club-hipico-reservas",
+  "version": "2.0.0",
+  "description": "Sistema de reservas para club hípico - clases, paquetes y panel admin",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
