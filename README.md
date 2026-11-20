@@ -1,11 +1,31 @@
 # 🐴 Club Hípico — Sistema de Reservaciones
 
+![Node.js](https://img.shields.io/badge/Node.js-5FA04E?style=flat-square&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
+
+**Demo:** https://clubhipico.vercel.app
+
+![Inicio](./docs/screenshots/home.png)
+
 Sistema de reservas de clases de equitación con panel de administración,
 paquetes mensuales con descuento automático, notificaciones por Telegram y
 correo (recordatorios automáticos a clientes).
 
 **Stack:** Node.js + Express · Supabase (PostgreSQL) · Frontend HTML/vanilla JS
 **Hosting:** Backend en Render.com · Frontend en Vercel
+
+**Puntos técnicos destacados**
+- Cupo máximo por horario, configurable desde el panel sin volver a desplegar.
+- Paquetes mensuales: el sistema detecta el paquete activo por teléfono, descuenta la clase y la devuelve si se cancela la reserva.
+- Panel protegido con token firmado (HMAC) con expiración, comparación en tiempo constante y límite de intentos.
+- Tareas programadas (cron): recordatorios por correo (Resend) y Telegram, limpieza diaria de clases pasadas y expiración de paquetes.
+
+| Escritorio | Móvil |
+|---|---|
+| ![Escritorio](./docs/screenshots/home.png) | ![Móvil](./docs/screenshots/home-mobile.png) |
 
 ---
 
